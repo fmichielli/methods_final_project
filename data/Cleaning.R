@@ -7,6 +7,7 @@ library(tidycensus)
 library(tidyverse)
 library(ggplot2)
 library(scales)
+library(tigris)
 
 
 data <- read.csv("SBS_Certified_Business_List_20260404.csv", as.is = TRUE)
@@ -204,9 +205,10 @@ nyc <- nyc %>%
     poverty_quintile = ntile(poverty_rate, 5)
     
   ) %>% 
-  erase_water(year = 2020)
+  erase_water(year = 2020) %>% 
+  filter(total_popE != 0)
 
-library(tigris)
+
 # nyc <- nyc %>% 
 #   st_make_valid() %>%
 #   erase_water(area_threshold = 0.75) %>%
