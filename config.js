@@ -28,9 +28,14 @@ var config = {
             onChapterEnter: [
                  {
                  layer: 'sbs-points',
-                //     opacity: 1,
-                //     duration: 5000
-                 }
+                 opacity: 1,
+                 duration: 5000
+                 },
+                 {
+                    layer: 'census data',
+                    opacity: 0,
+                    duration: 5000
+                    }
             ],
             onChapterExit: [
                 // {
