@@ -12,3 +12,25 @@ var map = new mapboxgl.Map({
     center: [-73.93324, 40.80877],
     zoom: 14
 });
+
+
+var blocks_url = "./data/nyc_census_data.geojson"
+
+map.on('load',function(){
+    // define a 'source' for your polygons dataset
+    map.addSource('blocks_data',{
+      'type':'geojson',
+      'data': blocks_url,
+    });
+    // add a new layer with your polygons
+    map.addLayer({
+      'id':'blocks',
+      'type':'fill',
+      'source':'blocks_data',
+      'paint':{
+        'fill-color':'#ffffff',
+        'fill-outline-color':'#000000',
+        'fill-opacity': 0.5
+      }
+    })
+  });
