@@ -29,12 +29,12 @@ var config = {
                  {
                  layer: 'sbs-points',
                  opacity: 1,
-                 duration: 5000
+                 duration: 3000
                  },
                  {
                     layer: 'census data',
                     opacity: 0,
-                    duration: 5000
+                    duration: 3000
                     }
             ],
             onChapterExit: [
