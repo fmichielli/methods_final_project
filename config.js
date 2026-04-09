@@ -54,7 +54,7 @@ var config = {
             alignment: 'left',
             hidden: false,
             title: 'Women, Minority-Owned, and Emerging Business Enterprises',
-            image: './legend-clean.png',
+            image: './legend_clean.png',
             description: 'Through the Small Business Services certification program, the City certifies, promotes, and fosters the growth of the minority and women-owned businesses. Through the certification program, SBS provides these businesses with mentorship programs, access to contracting opportunities, and networking opportunities.',
             location: {
                 center: [-73.945036, 40.734321],
@@ -75,7 +75,12 @@ var config = {
                        layer: 'census data',
                        opacity: 0,
                        duration: 3000
-                       }
+                       },
+                       {
+                        layer: 'sbs-points-basic',
+                        opacity: 0,
+                        duration: 3000
+                        }
             ],
             onChapterExit: []
         }
