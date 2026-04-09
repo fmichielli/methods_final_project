@@ -15,6 +15,7 @@ var map = new mapboxgl.Map({
 
 
 var blocks_url = "./data/nyc_census_data.geojson"
+var sbs_url = "./data/SBS_data.geojson"
 
 map.on('load',function(){
     // define a 'source' for your polygons dataset
@@ -33,4 +34,22 @@ map.on('load',function(){
         'fill-opacity': 0.5
       }
     })
+    map.addSource('SBS_data',{
+        'type':'geojson',
+        'data': sbs_url
+      });
+      // add a new layer with your points
+      map.addLayer({
+        'id':'business',
+        'type':'circle',
+        'source':'SBS_data',
+        'paint':{
+          'circle-color': '#349f27',
+          'circle-opacity':0.7,
+          'circle-radius':4
+        },
+      })
   });
+
+
+
