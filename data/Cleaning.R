@@ -165,6 +165,18 @@ nyc <- nyc %>%
     pct_black    = blackE / total_popE,
     pct_asian    = asianE / total_popE,
     pct_hispanic = hispanicE / total_popE,
+    predominant_race = case_when(
+      pct_white >= pct_black & pct_white >= pct_asian ~ "White",
+      pct_black >= pct_white & pct_black >= pct_asian ~ "Black",
+      pct_asian >= pct_white & pct_asian >= pct_black ~ "Asian",
+      TRUE ~ NA_character_
+    ),
+    predominant_ethnicity = case_when(
+      pct_hispanic >= 0.5 ~ "Hispanic majority",
+      pct_hispanic >= 0.3 ~ "Plurality Hispanic",
+      TRUE ~ "Non-Hispanic majority"
+    ),
+    
     
     # -------------------------
     # EDUCATION

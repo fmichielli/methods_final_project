@@ -7,7 +7,7 @@ var config = {
     use3dTerrain: false,
     title: 'Small Businesses of New York City',
     subtitle: "How do Small Businesses Contribute to NYC's Communities?",
-    byline: 'By a Aishwarya, Dajin, and Frankie',
+    byline: 'By Aishwarya, Dajin, and Frankie',
     footer: 'Source: SBS Certified Business List, NYC OpenData. Census Data, ACS.',
     chapters: [
         {
@@ -31,11 +31,6 @@ var config = {
                  opacity: 1,
                  duration: 3000
                  },
-                 {
-                    layer: 'census data',
-                    opacity: 0,
-                    duration: 3000
-                    },
                 {
                     layer: 'sbs-points',
                     opacity: 0,
@@ -59,6 +54,36 @@ var config = {
             location: {
                 center: [-73.945036, 40.734321],
                 zoom: 11,
+                pitch: 0,
+                bearing: 0
+            }
+            ,mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points',
+                    opacity: 1,
+                    duration: 3000
+                    },
+                       {
+                        layer: 'sbs-points-basic',
+                        opacity: 0,
+                        duration: 3000
+                        }
+            ],
+            onChapterExit: []
+        },
+        {
+            id: 'chapter-3',
+            alignment: 'left',
+            hidden: false,
+            title: 'Williamsburg and Greenpoint, Brooklyn, are a hub for women-owned businesses.',
+            description: '',
+            image: './legend_clean.png',
+            location: {
+                center: [-73.94943, 40.71448],
+                zoom: 15,
                 pitch: 0,
                 bearing: 0
             }
