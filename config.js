@@ -6,16 +6,16 @@ var config = {
     theme: 'light',
     use3dTerrain: false,
     title: 'Small Businesses of New York City',
-    subtitle: "How do small businesses contribute to NYC's communities",
+    subtitle: "How do Small Businesses Contribute to NYC's Communities?",
     byline: 'By a Aishwarya, Dajin, and Frankie',
     footer: 'Source: SBS Certified Business List, NYC OpenData. Census Data, ACS.',
     chapters: [
         {
             id: 'chapter-1',
-            alignment: 'left',
+            alignment: 'center',
             hidden: false,
             title: 'Small Businesses',
-            description: "Small businesses are a vital part of NYC's economy and community development",
+            description: "Small businesses are a vital part of NYC's economy and community development. The blue dots represent the locations of small businesses across the city.",
             location: {
                 center: [ -73.945036, 40.734321],
                 zoom: 11,
@@ -27,7 +27,7 @@ var config = {
             callback: '',
             onChapterEnter: [
                  {
-                 layer: 'sbs-points',
+                 layer: 'sbs-points-basic',
                  opacity: 1,
                  duration: 3000
                  },
@@ -49,6 +49,7 @@ var config = {
             alignment: 'left',
             hidden: false,
             title: 'Women. Minority-Owned, and Emerging Business Enterprises',
+            image: 'legend-clean.png',
             description: 'Through the Small Business Services certification program, the City certifies, promotes, and fosters the growth of the minority and women-owned businesses. Through the certification program, SBS provides these businesses with mentorship programs, access to contracting opportunities, and networking opportunities.',
             location: {
                 center: [-73.945036, 40.734321],
@@ -59,7 +60,18 @@ var config = {
             ,mapAnimation: 'flyTo',
             rotateAnimation: false,
             callback: '',
-            onChapterEnter: [],
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points',
+                    opacity: 1,
+                    duration: 3000
+                    },
+                    {
+                       layer: 'census data',
+                       opacity: 0,
+                       duration: 3000
+                       }
+            ],
             onChapterExit: []
         }
     ]
