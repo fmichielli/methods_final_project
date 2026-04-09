@@ -35,6 +35,27 @@ var config = {
                     layer: 'sbs-points',
                     opacity: 0,
                     duration: 3000
+                    },
+                {
+                    layer: 'sbs-points-business-cat',
+                    opacity: 0,
+                    duration: 3000
+                    },
+                {
+                    layer: 'census-data-ethnicity',
+                    opacity: 0,
+                    duration: 3000
+                        },
+                {
+                    layer: 'census-data-race',
+                    opacity: 0,
+                    duration: 3000
+                    },
+               
+                {
+                    layer: 'census-data-poverty',
+                    opacity: 0,
+                    duration: 3000
                     }
             ],
             onChapterExit: [
@@ -62,15 +83,36 @@ var config = {
             callback: '',
             onChapterEnter: [
                 {
-                    layer: 'sbs-points',
-                    opacity: 1,
+                    layer: 'sbs-points-basic',
+                    opacity: 0,
                     duration: 3000
                     },
-                       {
-                        layer: 'sbs-points-basic',
-                        opacity: 0,
-                        duration: 3000
-                        }
+                   {
+                       layer: 'sbs-points',
+                       opacity: 1,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'sbs-points-business-cat',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'census-data-ethnicity',
+                       opacity: 0,
+                       duration: 3000
+                           },
+                   {
+                       layer: 'census-data-race',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                  
+                   {
+                       layer: 'census-data-poverty',
+                       opacity: 0,
+                       duration: 3000
+                       }
             ],
             onChapterExit: []
         },
@@ -83,7 +125,7 @@ var config = {
             image: './legend_clean.png',
             location: {
                 center: [-73.94943, 40.71448],
-                zoom: 15,
+                zoom: 13,
                 pitch: 0,
                 bearing: 0
             }
@@ -92,22 +134,92 @@ var config = {
             callback: '',
             onChapterEnter: [
                 {
-                    layer: 'sbs-points',
-                    opacity: 1,
+                    layer: 'sbs-points-basic',
+                    opacity: 0,
                     duration: 3000
                     },
-                    {
-                       layer: 'census data',
+                   {
+                       layer: 'sbs-points',
+                       opacity: 1,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'sbs-points-business-cat',
                        opacity: 0,
                        duration: 3000
                        },
-                       {
-                        layer: 'sbs-points-basic',
-                        opacity: 0,
-                        duration: 3000
-                        }
+                   {
+                       layer: 'census-data-ethnicity',
+                       opacity: 0,
+                       duration: 3000
+                           },
+                   {
+                       layer: 'census-data-race',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                  
+                   {
+                       layer: 'census-data-poverty',
+                       opacity: 0,
+                       duration: 3000
+                       }
+            ],
+            onChapterExit: []
+        },
+
+        {
+            id: 'chapter-4',
+            alignment: 'right',
+            hidden: false,
+            title: 'Meanwhile, neighboring Bed-Stuy is a hub for minority-owned businesses. In particular, minority and women owned businesses, marked in light blue, dominate.',
+            description: '',
+            image: './legend_clean.png',
+            location: {
+                center: [-73.94027, 40.68367],
+                zoom: 13,
+                pitch: 0,
+                bearing: 0
+            }
+            ,mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points-basic',
+                    opacity: 0,
+                    duration: 3000
+                    },
+                   {
+                       layer: 'sbs-points',
+                       opacity: 1,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'sbs-points-business-cat',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'census-data-ethnicity',
+                       opacity: 0,
+                       duration: 3000
+                           },
+                   {
+                       layer: 'census-data-race',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                  
+                   {
+                       layer: 'census-data-poverty',
+                       opacity: 0,
+                       duration: 3000
+                       }
             ],
             onChapterExit: []
         }
+
+
     ]
 };
