@@ -1,5 +1,5 @@
 var config = {
-    style: 'mapbox://styles/mapbox/streets-v11',
+    style: 'mapbox://styles/fmichielli/cmnquzlk7003k01s73ydzf20n',
     accessToken: 'pk.eyJ1IjoiZm1pY2hpZWxsaSIsImEiOiJjbW43dTZuYmQwNGFmMm9xNW5lbHRseTR5In0.2dn0F7JMPo6G-oSdVe5dNg',
     showMarkers: true,
     markerColor: '#3FB1CE',
