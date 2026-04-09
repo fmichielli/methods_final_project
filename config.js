@@ -1,7 +1,7 @@
 var config = {
     style: 'mapbox://styles/fmichielli/cmnquzlk7003k01s73ydzf20n',
     accessToken: 'pk.eyJ1IjoiZm1pY2hpZWxsaSIsImEiOiJjbW43dTZuYmQwNGFmMm9xNW5lbHRseTR5In0.2dn0F7JMPo6G-oSdVe5dNg',
-    showMarkers: true,
+    showMarkers: false,
     markerColor: '#3FB1CE',
     theme: 'light',
     use3dTerrain: false,
@@ -26,11 +26,11 @@ var config = {
             rotateAnimation: false,
             callback: '',
             onChapterEnter: [
-                // {
-                //     layer: 'layer-name',
+                 {
+                 layer: 'sbs-points',
                 //     opacity: 1,
                 //     duration: 5000
-                // }
+                 }
             ],
             onChapterExit: [
                 // {
