@@ -320,6 +320,158 @@ var config = {
                        }
             ],
             onChapterExit: []
+        },
+
+        {
+            id: 'chapter-7',
+            alignment: 'center',
+            hidden: false,
+            title: 'Project Next Steps:',
+            description: 'Investigate the distribution of business types across the city',
+            location: {
+                center: [-73.92743, 40.81341],
+                zoom: 11,
+                pitch: 0,
+                bearing: 0
+            }
+            ,mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points-basic',
+                    opacity: 0,
+                    duration: 3000
+                    },
+                   {
+                       layer: 'sbs-points',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'sbs-points-business-cat',
+                       opacity: 1,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'census-data-ethnicity',
+                       opacity: 0,
+                       duration: 3000
+                           },
+                   {
+                       layer: 'census-data-race',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                  
+                   {
+                       layer: 'census-data-poverty',
+                       opacity: 0,
+                       duration: 3000
+                       }
+            ],
+            onChapterExit: []
+        },
+
+        {
+            id: 'chapter-8',
+            alignment: 'left',
+            hidden: false,
+            title: 'Project Next Steps:',
+            description: 'Investigate the relationship between business ownership and neighborhood demographics',
+            location: {
+                center: [-73.92743, 40.81341],
+                zoom: 11,
+                pitch: 0,
+                bearing: 0
+            }
+            ,mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points-basic',
+                    opacity: 1,
+                    duration: 3000
+                    },
+                   {
+                       layer: 'sbs-points',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'sbs-points-business-cat',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'census-data-ethnicity',
+                       opacity: 0,
+                       duration: 3000
+                           },
+                   {
+                       layer: 'census-data-race',
+                       opacity: 1,
+                       duration: 3000
+                       },
+                  
+                   {
+                       layer: 'census-data-poverty',
+                       opacity: 0,
+                       duration: 3000
+                       }
+            ],
+            onChapterExit: []
+        },
+        {
+            id: 'chapter-8',
+            alignment: 'left',
+            hidden: false,
+            title: 'Project Next Steps:',
+            description: 'Interviews with small business owners and community members to understand the impact of small businesses on communities across the city',
+            location: {
+                center: [-73.92743, 40.81341],
+                zoom: 11,
+                pitch: 0,
+                bearing: 0
+            }
+            ,mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: '',
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points-basic',
+                    opacity: 1,
+                    duration: 3000
+                    },
+                   {
+                       layer: 'sbs-points',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'sbs-points-business-cat',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'census-data-ethnicity',
+                       opacity: 0,
+                       duration: 3000
+                           },
+                   {
+                       layer: 'census-data-race',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                  
+                   {
+                       layer: 'census-data-poverty',
+                       opacity: 0,
+                       duration: 3000
+                       }
+            ],
+            onChapterExit: []
         }
 
 
