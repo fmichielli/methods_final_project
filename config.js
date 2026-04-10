@@ -375,7 +375,7 @@ var config = {
 
         {
             id: 'chapter-8',
-            alignment: 'left',
+            alignment: 'center',
             hidden: false,
             title: 'Project Next Steps:',
             description: 'Investigate the relationship between business ownership and neighborhood demographics',
@@ -424,11 +424,11 @@ var config = {
             onChapterExit: []
         },
         {
-            id: 'chapter-8',
-            alignment: 'left',
+            id: 'chapter-9',
+            alignment: 'center',
             hidden: false,
             title: 'Project Next Steps:',
-            description: 'Interviews with small business owners and community members to understand the impact of small businesses on communities across the city',
+            description: 'Interviews with small business owners and community members to understand the impact of small businesses on communities across the city. And, improve visualizations!',
             location: {
                 center: [-73.92743, 40.81341],
                 zoom: 11,
