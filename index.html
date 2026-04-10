@@ -286,6 +286,16 @@ map.on("load", function() {
         });
     };
 
+      // Set initial layer visibility so unwanted layers do not appear on page load
+    [
+        { layer: 'sbs-points-basic', opacity: 1 },
+        { layer: 'sbs-points', opacity: 0 },
+        { layer: 'sbs-points-business-cat', opacity: 0 },
+        { layer: 'census-data-ethnicity', opacity: 0 },
+        { layer: 'census-data-race', opacity: 0 },
+        { layer: 'census-data-poverty', opacity: 0 }
+    ].forEach(setLayerOpacity);
+
     // setup the instance, pass callback functions
     scroller
     .setup({

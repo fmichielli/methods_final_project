@@ -7,7 +7,7 @@ var config = {
     use3dTerrain: false,
     title: 'Small Businesses of New York City',
     subtitle: "How do Small Businesses Contribute to NYC's Communities?",
-    byline: 'By Aishwarya, Dajin, and Frankie',
+    byline: 'By Aishwarya Warad, Dajin Wang, and Frankie Michielli',
     footer: 'Source: SBS Certified Business List, NYC OpenData. Census Data, ACS.',
     chapters: [
         {
