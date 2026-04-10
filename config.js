@@ -329,7 +329,7 @@ var config = {
             title: 'Project Next Steps:',
             description: 'Investigate the distribution of business types across the city',
             location: {
-                center: [-73.92743, 40.81341],
+                center: [ -73.945036, 40.734321],
                 zoom: 11,
                 pitch: 0,
                 bearing: 0
@@ -380,7 +380,7 @@ var config = {
             title: 'Project Next Steps:',
             description: 'Investigate the relationship between business ownership and neighborhood demographics',
             location: {
-                center: [-73.92743, 40.81341],
+                center: [ -73.945036, 40.734321],
                 zoom: 11,
                 pitch: 0,
                 bearing: 0
@@ -430,7 +430,7 @@ var config = {
             title: 'Project Next Steps:',
             description: 'Interviews with small business owners and community members to understand the impact of small businesses on communities across the city. And, improve visualizations!',
             location: {
-                center: [-73.92743, 40.81341],
+                center: [ -73.945036, 40.734321],
                 zoom: 11,
                 pitch: 0,
                 bearing: 0
