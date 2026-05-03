@@ -18,7 +18,7 @@ var config = {
             description: "Small businesses are a vital part of NYC's economy and community development. The blue dots represent the locations of registered small businesses across the city.",
             location: {
                 center: [ -73.945036, 40.734321],
-                zoom: 10,
+                zoom: 11,
                 pitch: 0,
                 bearing: 0
             },

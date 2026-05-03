@@ -272,7 +272,7 @@
                 <option value="sbs-points-basic">Basic</option>
                 <option value="sbs-points">By business classification</option>
                 <option value="sbs-points-business-cat">By business category</option>
-                <option value="sbs-points race">By race</option>
+                <option value="sbs-points race">By ethnicity</option>
             </select>
 
             <label for="census-layer-select">Census layer</label>
@@ -671,7 +671,7 @@ function disableExploreMode() {
 
 function goBackToStory() {
     disableExploreMode();
-    document.getElementById('chapter-9').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('chapter-9').scrollIntoView({ behavior: 'auto'  });
 }
 
 if (config.showMarkers) {

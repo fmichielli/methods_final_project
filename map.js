@@ -45,7 +45,9 @@ map.on('load',function(){
     })
     map.addSource('SBS_data',{
         'type':'geojson',
-        'data': sbs_url
+        'data': sbs_url,
+        cluster: true,
+        clusterRadius: 50
       });
       // add a new layer with your points
       map.addLayer({
