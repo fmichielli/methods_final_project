@@ -85,6 +85,7 @@
             opacity: 0.9;
         }
 
+
         .step div {
             padding:  25px 50px;
             line-height: 25px;
@@ -93,6 +94,10 @@
 
         .step img {
             width: 100%;
+        }
+
+        #chapter-10 > div {
+            display: none;
         }
 
         @media (max-width: 750px) {
@@ -108,12 +113,181 @@
             touch-action: unset;
         }
 
-        </style>
-</head>
-<body>
+        #back-to-story {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 9999;
+            padding: 10px 14px;
+            background: white;
+            color: black;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 14px;
+            cursor: pointer;
+            pointer-events: auto;
+        }
 
+        #back-to-story:hover {
+            background: #f0f0f0;
+        }
+
+        #explore-banner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            z-index: 9998;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            text-align: center;
+            padding: 12px 20px;
+            box-sizing: border-box;
+            font-size: 15px;
+            line-height: 22px;
+            pointer-events: none;
+        }
+
+        #explore-banner strong {
+            font-size: 16px;
+        }
+
+    #layer-controls {
+            display: none;
+            position: fixed;
+            top: 70px;
+            left: 20px;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 12px 14px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 24px;
+            pointer-events: auto;
+        }
+
+        #layer-controls h4 {
+            margin: 0 0 8px 0;
+            font-size: 14px;
+        }
+
+        #layer-controls label {
+            display: block;
+            margin-top: 8px;
+            margin-bottom: 4px;
+            font-weight: bold;
+        }
+
+        #layer-controls select {
+            width: 220px;
+            padding: 4px;
+            font-size: 13px;
+        }
+
+
+        #map-legend {
+            display: none;
+            position: fixed;
+            bottom: 30px;
+            left: 20px;
+            z-index: 9999;
+            background: rgba(255, 255, 255, 0.95);
+            color: #333;
+            padding: 12px 14px;
+            border: 1px solid #333;
+            border-radius: 4px;
+            font-size: 13px;
+            line-height: 20px;
+            max-width: 280px;
+        }
+
+        #map-legend h4 {
+            margin: 0 0 8px 0;
+        }
+
+        #map-legend .legend-section {
+            margin-top: 8px;
+            margin-bottom: 4px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 3px 0;
+        }
+
+        .legend-dot {
+            width: 12px;
+            height: 12px;
+            min-width: 12px;
+            min-height: 12px;
+            max-width: 12px;
+            max-height: 12px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            flex: 0 0 12px;
+            display: inline-block;
+        }
+
+        .legend-swatch {
+            width: 18px;
+            height: 12px;
+            min-width: 18px;
+            flex: 0 0 18px;
+            border: 1px solid #555;
+            display: inline-block;
+        }
+
+        .legend-gradient {
+            width: 120px;
+            height: 12px;
+            border: 1px solid #555;
+            flex: 0 0 auto;
+        }
+
+        .legend-note {
+            font-size: 12px;
+            color: #555;
+            margin-top: 2px;
+            margin-bottom: 6px;
+        }
+
+                </style>
+        </head>
+        <body>
+
+        <button id="back-to-story" onclick="goBackToStory()">Back to Story</button>
+        <div id="explore-banner"><strong>Explore the Map</strong> — click on businesses and move around the map.</div>
+
+        <div id="layer-controls">
+            <h4>Map Layers</h4>
+
+            <label for="business-layer-select">Small businesses</label>
+            <select id="business-layer-select">
+                <option value="sbs-points-basic">Basic</option>
+                <option value="sbs-points">By business classification</option>
+                <option value="sbs-points-business-cat">By business category</option>
+                <option value="sbs-points race">By race</option>
+            </select>
+
+            <label for="census-layer-select">Census layer</label>
+            <select id="census-layer-select">
+                <option value="none">None</option>
+                <option value="census-data-ethnicity">Ethnicity</option>
+                <option value="census-data-race">Race</option>
+                <option value="census-data-poverty">Poverty</option>
+            </select>
+</div>
+
+<div id="map-legend"></div>
 <div id="map"></div>
 <div id="story"></div>
+
 <script src="./config.js"></script>
 <script>
 var layerTypes = {
@@ -151,6 +325,202 @@ function setLayerOpacity(layer) {
     });
 }
 
+function setLayerVisibilityByOpacity(layerId, visible, visibleOpacity) {
+    if (!map.getLayer(layerId)) return;
+    var paintProps = getLayerPaintType(layerId);
+    paintProps.forEach(function(prop) {
+        map.setPaintProperty(layerId, prop, visible ? visibleOpacity : 0);
+    });
+}
+
+var businessLayers = [
+    'sbs-points-basic',
+    'sbs-points',
+    'sbs-points-business-cat',
+    'sbs-points race'
+];
+
+var censusLayers = [
+    'census-data-ethnicity',
+    'census-data-race',
+    'census-data-poverty'
+];
+
+function setLayerVisibilityByOpacity(layerId, visible, opacity) {
+    if (!map.getLayer(layerId)) return;
+
+    var paintProps = getLayerPaintType(layerId);
+    paintProps.forEach(function(prop) {
+        map.setPaintProperty(layerId, prop, visible ? opacity : 0);
+    });
+}
+
+function showOnlyBusinessLayer(selected) {
+    businessLayers.forEach(function(layer) {
+        setLayerVisibilityByOpacity(layer, layer === selected, 1);
+    });
+}
+
+function showOnlyCensusLayer(selected) {
+    censusLayers.forEach(function(layer) {
+        let opacity = layer === 'census-data-poverty' ? 0.6 : 0.8;
+        setLayerVisibilityByOpacity(layer, layer === selected, opacity);
+    });
+}
+
+function updateLegend() {
+    var business = document.getElementById('business-layer-select').value;
+    var census = document.getElementById('census-layer-select').value;
+
+    let html = "<h4>Legend</h4>";
+
+    // BUSINESS LEGENDS
+    if (business === 'sbs-points-basic') {
+        html += `
+        <div class="legend-section"><strong>Small businesses</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#05347a"></span>Certified small business</div>
+        `;
+    }
+
+    if (business === 'sbs-points') {
+        html += `
+        <div class="legend-section"><strong>Business certification</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#3fc4d4"></span>MBE, WBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#39c46a"></span>WBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#f39d0b"></span>MBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#8a23d3"></span>EBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#757575"></span>Other</div>
+        `;
+    }
+
+    if (business === 'sbs-points-business-cat') {
+        html += `
+        <div class="legend-section"><strong>Business sector</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#1b9e77"></span>Education, health care, and social assistance</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#d95f02"></span>Retail, arts, entertainment, recreation, and other services</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#7570b3"></span>Accommodation and food services</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e7298a"></span>Construction</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#66a61e"></span>Manufacturing and wholesale trade</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e6ab02"></span>Transportation, warehousing, and utilities</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#a6761d"></span>Administrative support, waste management, and real estate</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ad9f9f"></span>Professional, finance, insurance, agriculture, and other enterprises</div>
+        `;
+    }
+
+    if (business === 'sbs-points race') {
+        html += `
+        <div class="legend-section"><strong>Owner ethnicity</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#5757ef"></span>Asian</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#0873a1"></span>Black</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ae0481"></span>Hispanic</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e49c01"></span>Non-minority</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#757575"></span>Other</div>
+        `;
+    }
+
+    // CENSUS LEGENDS
+    if (census === 'census-data-race') {
+        html += `
+        <div class="legend-section"><strong>Predominant race</strong></div>
+        <div class="legend-note">Categorical census layer</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#fdd79b"></span>White</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#e2bcfb"></span>Asian</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#add5fc"></span>Black</div>
+        `;
+    }
+
+    if (census === 'census-data-ethnicity') {
+        html += `
+        <div class="legend-section"><strong>Percent Hispanic</strong></div>
+        <div class="legend-note"> lighter = lower share, darker = higher share</div>
+        <div class="legend-item"><span class="legend-gradient" style="background: linear-gradient(to right, #fff0fa, #e729c7);"></span><span>0 to 0.94</span></div>
+        `;
+    }
+
+    if (census === 'census-data-poverty') {
+        html += `
+        <div class="legend-section"><strong>Poverty rate</strong></div>
+        <div class="legend-note"> lighter = lower poverty, darker = higher poverty</div>
+        <div class="legend-item"><span class="legend-gradient" style="background: linear-gradient(to right, #e5fffb, #228577);"></span><span>0 to 1</span></div>
+        `;
+    }
+
+    document.getElementById('map-legend').innerHTML = html;
+}
+
+function setupLayerToggles() {
+    document.getElementById('business-layer-select')
+        .addEventListener('change', function(e) {
+            showOnlyBusinessLayer(e.target.value);
+            updateLegend();
+        });
+
+    document.getElementById('census-layer-select')
+        .addEventListener('change', function(e) {
+            if (e.target.value === 'none') {
+                showOnlyCensusLayer('none');
+            } else {
+                showOnlyCensusLayer(e.target.value);
+            }
+            updateLegend();
+        });
+}
+
+function cleanPopupValue(value) {
+    if (value === undefined || value === null || value === '') {
+        return 'N/A';
+    }
+    return value;
+}
+
+function setupBusinessPopups() {
+    businessLayers.forEach(function(layerId) {
+        if (!map.getLayer(layerId)) return;
+
+        map.on('mouseenter', layerId, function() {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+
+        map.on('mouseleave', layerId, function() {
+            map.getCanvas().style.cursor = '';
+        });
+
+        map.on('click', layerId, function(e) {
+            var props = e.features[0].properties;
+
+            var businessName = cleanPopupValue(props.Vendor_Formal_Name);
+            var address = cleanPopupValue(props.Address_Line_1);
+            var certification = cleanPopupValue(props.Certification);
+            var ethnicity = cleanPopupValue(props.Ethnicity);
+            var businessType = cleanPopupValue(props.NAICS_Title);
+            var dateEstablished = cleanPopupValue(props.Date_Of_Establishment);
+            var description = cleanPopupValue(props.Business_Description);
+
+            var popupHTML = `
+                <div style="max-width: 280px; line-height: 1.4;">
+                    <strong>${businessName}</strong><br><br>
+                    <strong>Address:</strong> ${address}<br>
+                    <strong>Certification Type:</strong> ${certification}<br>
+                    <strong>Ethnicity of Business Owner:</strong> ${ethnicity}<br>
+                    <strong>Business Type:</strong> ${businessType}<br>
+                    <strong>Date of Establishment:</strong> ${dateEstablished}<br><br>
+                    <strong>Business Description:</strong><br>${description}
+                </div>
+            `;
+
+            new mapboxgl.Popup({
+                maxWidth: '320px',
+                closeButton: false,
+                closeOnClick: true
+            })
+                .setLngLat(e.lngLat)
+                .setHTML(popupHTML)
+                .addTo(map);
+        });
+    });
+}
+
+
 var story = document.getElementById('story');
 var features = document.createElement('div');
 features.setAttribute('id', 'features');
@@ -185,22 +555,24 @@ config.chapters.forEach((record, idx) => {
     var container = document.createElement('div');
     var chapter = document.createElement('div');
 
-    if (record.title) {
-        var title = document.createElement('h3');
-        title.innerText = record.title;
-        chapter.appendChild(title);
-    }
+    if (record.id !== 'chapter-10') {
+        if (record.title) {
+            var title = document.createElement('h3');
+            title.innerText = record.title;
+            chapter.appendChild(title);
+        }
 
-    if (record.image) {
-        var image = new Image();
-        image.src = record.image;
-        chapter.appendChild(image);
-    }
+        if (record.image) {
+            var image = new Image();
+            image.src = record.image;
+            chapter.appendChild(image);
+        }
 
-    if (record.description) {
-        var story = document.createElement('p');
-        story.innerHTML = record.description;
-        chapter.appendChild(story);
+        if (record.description) {
+            var story = document.createElement('p');
+            story.innerHTML = record.description;
+            chapter.appendChild(story);
+        }
     }
 
     container.setAttribute('id', record.id);
@@ -255,6 +627,53 @@ var map = new mapboxgl.Map({
     transformRequest: transformRequest
 });
 
+function enableExploreMode() {
+    map.scrollZoom.enable();
+    map.boxZoom.enable();
+    map.dragPan.enable();
+    map.dragRotate.enable();
+    map.keyboard.enable();
+    map.doubleClickZoom.enable();
+    map.touchZoomRotate.enable();
+
+    document.getElementById('business-layer-select').value = 'sbs-points-basic';
+    document.getElementById('census-layer-select').value = 'none';
+
+    showOnlyBusinessLayer('sbs-points-basic');
+    showOnlyCensusLayer('none');
+
+    document.getElementById('story').style.display = 'none';
+    document.getElementById('map').style.pointerEvents = 'auto';
+    document.getElementById('back-to-story').style.display = 'block';
+    document.getElementById('explore-banner').style.display = 'block';
+    document.getElementById('layer-controls').style.display = 'block';
+    updateLegend();
+    document.getElementById('map-legend').style.display = 'block';
+    map.resize();
+}
+
+function disableExploreMode() {
+    map.scrollZoom.disable();
+    map.boxZoom.disable();
+    map.dragPan.disable();
+    map.dragRotate.disable();
+    map.keyboard.disable();
+    map.doubleClickZoom.disable();
+    map.touchZoomRotate.disable();
+
+    document.getElementById('story').style.display = 'block';
+    document.getElementById('story').style.pointerEvents = 'auto';
+    document.getElementById('back-to-story').style.display = 'none';
+    document.getElementById('explore-banner').style.display = 'none';
+    document.getElementById('layer-controls').style.display = 'none';
+    document.getElementById('map-legend').style.display = 'none';
+}
+
+function goBackToStory() {
+    disableExploreMode();
+    document.getElementById('chapter-9').scrollIntoView({ behavior: 'smooth' });
+}
+
 if (config.showMarkers) {
     var marker = new mapboxgl.Marker({ color: config.markerColor });
     marker.setLngLat(config.chapters[0].location.center).addTo(map);
@@ -295,6 +714,11 @@ map.on("load", function() {
         { layer: 'census-data-race', opacity: 0 },
         { layer: 'census-data-poverty', opacity: 0 }
     ].forEach(setLayerOpacity);
+
+    setupLayerToggles();
+
+    setupBusinessPopups();
+
 
     // setup the instance, pass callback functions
     scroller

@@ -18,7 +18,7 @@ var config = {
             description: "Small businesses are a vital part of NYC's economy and community development. The blue dots represent the locations of registered small businesses across the city.",
             location: {
                 center: [ -73.945036, 40.734321],
-                zoom: 11,
+                zoom: 10,
                 pitch: 0,
                 bearing: 0
             },
@@ -41,6 +41,11 @@ var config = {
                     opacity: 0,
                     duration: 3000
                     },
+                {
+                    layer: 'sbs-points race',
+                    opacity: 0,
+                    duration: 3000
+                    },                    
                 {
                     layer: 'census-data-ethnicity',
                     opacity: 0,
@@ -471,6 +476,32 @@ var config = {
                        duration: 3000
                        }
             ],
+            onChapterExit: []
+        },
+
+        {
+            id: 'chapter-10',
+            alignment: 'center',
+            title: 'Explore the Map',
+            description: 'Click on businesses and toggle layers to explore the data yourself.',
+            location: {
+                center: [-73.945036, 40.734321],
+                zoom: 11,
+                pitch: 0,
+                bearing: 0
+            },
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points',
+                    opacity: 1
+                },
+                {
+                    layer: 'census-data-poverty',
+                    opacity: 0.6
+                }
+            ],
+            hidden: false,
+            callback: 'enableExploreMode',
             onChapterExit: []
         }
 

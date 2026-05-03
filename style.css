@@ -28,3 +28,16 @@ body, html {
 img {
     width: 300px;
 }
+
+#back-to-story {
+    display: none;
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 9999;
+    padding: 10px 14px;
+    background: white;
+    border: 1px solid #333;
+    border-radius: 4px;
+    cursor: pointer;
+}
