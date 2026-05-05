@@ -7,7 +7,7 @@ var config = {
     use3dTerrain: false,
     title: 'Small Businesses of New York City',
     subtitle: "How do Small Businesses Contribute to NYC's Communities?",
-    byline: 'By Aishwarya Warad, Dajin Wang, and Frankie Michielli',
+    byline: 'By  Frankie Michielli, Aishwarya Warad, and Dajin Wang',
     footer: 'Source: SBS Certified Business List, NYC OpenData. Census Data, ACS.',
     chapters: [
         {
@@ -75,7 +75,6 @@ var config = {
             alignment: 'left',
             hidden: false,
             title: 'Women, Minority-Owned, and Emerging Business Enterprises',
-            image: './legend_clean.png',
             description: 'Through the Small Business Services certification program, the City certifies, promotes, and fosters the growth of the minority and women-owned businesses. Through the certification program, SBS provides these businesses with mentorship programs, access to contracting opportunities, and networking opportunities.',
             location: {
                 center: [-73.945036, 40.734321],
@@ -127,7 +126,6 @@ var config = {
             hidden: false,
             title: 'Williamsburg and Greenpoint, Brooklyn, are hubs for women-owned businesses.',
             description: '',
-            image: './legend_clean.png',
             location: {
                 center: [-73.94943, 40.71448],
                 zoom: 13,
@@ -179,7 +177,6 @@ var config = {
             hidden: false,
             title: 'Meanwhile, neighboring Bed-Stuy is a hub for minority-owned businesses. In particular, minority and women owned businesses, marked in light blue, dominate.',
             description: '',
-            image: './legend_clean.png',
             location: {
                 center: [-73.94027, 40.68367],
                 zoom: 13,
@@ -281,7 +278,6 @@ var config = {
             hidden: false,
             title: 'South Bronx',
             description: 'The South Bronx is afflicted with high poverty rates, and, compared with neighboring Manhattan, has a relatively low density of small businesses. Nonetheless, minority business owners represent a significant portion of the small business community in the South Bronx.',
-            image: './legend_clean.png',
             location: {
                 center: [-73.92743, 40.81341],
                 zoom: 13,
@@ -331,8 +327,7 @@ var config = {
             id: 'chapter-7',
             alignment: 'center',
             hidden: false,
-            title: 'Project Next Steps:',
-            description: 'Investigate the distribution of business types across the city',
+            title: "Let's dive deeper into the relationship between the predominant neighborhood race and business owner race",
             location: {
                 center: [ -73.945036, 40.734321],
                 zoom: 11,
@@ -341,7 +336,7 @@ var config = {
             }
             ,mapAnimation: 'flyTo',
             rotateAnimation: false,
-            callback: '',
+            callback: 'hideNeighborhoods',
             onChapterEnter: [
                 {
                     layer: 'sbs-points-basic',
@@ -353,9 +348,14 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                {
+                    layer: 'sbs-points race',
+                    opacity: 1,
+                    duration: 3000
+                  },    
                    {
                        layer: 'sbs-points-business-cat',
-                       opacity: 1,
+                       opacity: 0,
                        duration: 3000
                        },
                    {
@@ -365,7 +365,7 @@ var config = {
                            },
                    {
                        layer: 'census-data-race',
-                       opacity: 0,
+                       opacity: 1,
                        duration: 3000
                        },
                   
@@ -382,8 +382,7 @@ var config = {
             id: 'chapter-8',
             alignment: 'center',
             hidden: false,
-            title: 'Project Next Steps:',
-            description: 'Investigate the relationship between business ownership and neighborhood demographics',
+            title: "Broadly, there is correlation between the race of the business owner and the predominant race in the neighborhood",
             location: {
                 center: [ -73.945036, 40.734321],
                 zoom: 11,
@@ -392,11 +391,11 @@ var config = {
             }
             ,mapAnimation: 'flyTo',
             rotateAnimation: false,
-            callback: '',
+            callback: 'hideNeighborhoods',
             onChapterEnter: [
                 {
                     layer: 'sbs-points-basic',
-                    opacity: 1,
+                    opacity: 0,
                     duration: 3000
                     },
                    {
@@ -404,6 +403,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                {
+                    layer: 'sbs-points race',
+                    opacity: 1,
+                    duration: 3000
+                  },    
                    {
                        layer: 'sbs-points-business-cat',
                        opacity: 0,
@@ -428,21 +432,22 @@ var config = {
             ],
             onChapterExit: []
         },
+
+        
         {
             id: 'chapter-9',
-            alignment: 'center',
+            alignment: 'right',
             hidden: false,
-            title: 'Project Next Steps:',
-            description: 'Interviews with small business owners and community members to understand the impact of small businesses on communities across the city. And, improve visualizations!',
+            title: 'This pattern is highlighted well in South Queens. South Ozone Park, which is majority Asian, has a higher density of Asian-owned businesses, while South Jamaica and Springfield Gardens, which are majority Black, have a higher density of Black-owned businesses.',
             location: {
-                center: [ -73.945036, 40.734321],
-                zoom: 11,
+                center: [ -73.778019, 40.683592],
+                zoom: 12,
                 pitch: 0,
                 bearing: 0
             }
             ,mapAnimation: 'flyTo',
             rotateAnimation: false,
-            callback: '',
+            callback: 'showQueensLabels',
             onChapterEnter: [
                 {
                     layer: 'sbs-points-basic',
@@ -459,6 +464,12 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+
+                {
+                    layer: 'sbs-points race',
+                    opacity: 1,
+                    duration: 3000
+                  },    
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -466,7 +477,63 @@ var config = {
                            },
                    {
                        layer: 'census-data-race',
+                       opacity: 1,
+                       duration: 3000
+                       },
+                  
+                   {
+                       layer: 'census-data-poverty',
                        opacity: 0,
+                       duration: 3000
+                       }
+            ],
+            onChapterExit: []
+        },
+ 
+        {
+            id: 'chapter-10',
+            alignment: 'right',
+            hidden: false,
+            title:  'The same pattern also appears in Upper Manhattan. In Harlem and East Harlem, where the predominant census race is Black, there is a higher concentration of Black-owned businesses. By contrast, in the neighboring Upper West Side and Upper East Side, where the predominant census race is White, there are more non-minority-owned businesses.',
+            location: {
+                center: [ -73.950466, 40.802120],
+                zoom: 12,
+                pitch: 0,
+                bearing: 0
+            }
+            ,mapAnimation: 'flyTo',
+            rotateAnimation: false,
+            callback: 'showUptownLabels',
+            onChapterEnter: [
+                {
+                    layer: 'sbs-points-basic',
+                    opacity: 1,
+                    duration: 3000
+                    },
+                   {
+                       layer: 'sbs-points',
+                       opacity: 0,
+                       duration: 3000
+                       },
+                   {
+                       layer: 'sbs-points-business-cat',
+                       opacity: 0,
+                       duration: 3000
+                       },
+
+                {
+                    layer: 'sbs-points race',
+                    opacity: 1,
+                    duration: 3000
+                  },    
+                   {
+                       layer: 'census-data-ethnicity',
+                       opacity: 0,
+                       duration: 3000
+                           },
+                   {
+                       layer: 'census-data-race',
+                       opacity: 1,
                        duration: 3000
                        },
                   
@@ -479,8 +546,337 @@ var config = {
             onChapterExit: []
         },
 
+// Replace your current chapter-11 block with these new chapters.
+// Keep explore-map after these chapters.
+
+    {
+        id: 'chapter-11',
+        alignment: 'right',
+        hidden: false,
+        title: 'This pattern is not uniform across the city. Midtown and Lower Manhattan have a more mixed set of business owner race and ethnicity, reflecting their dense and varied daytime populations.',
+        location: {
+            center: [-73.989, 40.735],
+            zoom: 12,
+            pitch: 0,
+            bearing: 0
+        },
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        callback: 'showLowerManhattanLabels',
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+    {
+        id: 'chapter-12',
+        alignment: 'center',
+        hidden: false,
+        title: 'Now, let\'s look at Hispanic ethnicity. The Census tracks race and ethnicity as separate categories, while the SBS business owner data groups race and ethnicity together. For that reason, we need to examine Hispanic ethnicity separately from the predominant race layer.',
+        location: {
+            center: [-73.945036, 40.734321],
+            zoom: 10,
+            pitch: 0,
+            bearing: 0
+        },
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        callback: 'hideNeighborhoods',
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0.8,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+    {
+        id: 'chapter-13',
+        alignment: 'right',
+        hidden: false,
+        title: 'Similarly to the pattern we saw with race, some Hispanic neighborhoods have high concentrations of Hispanic-owned businesses. This is particularly visible in Inwood, Fort George, and Washington Heights in northern Manhattan.',
+        location: {
+            center: [-73.931, 40.852],
+            zoom: 13,
+            pitch: 0,
+            bearing: 0
+        },
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        callback: 'showNorthManhattanLabels',
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0.8,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+    {
+        id: 'chapter-14',
+        alignment: 'left',
+        hidden: false,
+        title: 'In much of the Bronx, there is a visible mix of Black-owned and Hispanic-owned businesses, likely reflecting the borough\'s mixed racial and ethnic population.',
+        location: {
+            center: [-73.889, 40.844],
+            zoom: 11.5,
+            pitch: 0,
+            bearing: 0
+        },
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        callback: 'hideNeighborhoods',
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0.5,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 0.5,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+    {
+        id: 'chapter-15',
+        alignment: 'center',
+        hidden: false,
+        title: 'Overall, these patterns suggest that the race and ethnicity of small business owners are broadly patterned alongside the racial and ethnic composition of neighborhoods. The relationship is not perfect or uniform, but the spatial clustering is clear across several parts of the city.',
+        location: {
+            center: [-73.945036, 40.734321],
+            zoom: 11,
+            pitch: 0,
+            bearing: 0
+        },
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        callback: 'hideNeighborhoods',
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0.65,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+    {
+        id: 'chapter-16',
+        alignment: 'center',
+        hidden: false,
+        title: 'Project Next Steps:',
+        description: 'Interviews with small business owners and community members to understand the impact of small businesses on communities across the city. And, improve visualizations!',
+        location: {
+            center: [-73.945036, 40.734321],
+            zoom: 11,
+            pitch: 0,
+            bearing: 0
+        },
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        callback: 'hideNeighborhoods',
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+
         {
-            id: 'chapter-10',
+            id: 'explore-map',
             alignment: 'center',
             title: 'Explore the Map',
             description: 'Click on businesses and toggle layers to explore the data yourself.',

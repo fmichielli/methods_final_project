@@ -96,7 +96,7 @@
             width: 100%;
         }
 
-        #chapter-10 > div {
+        #explore-map > div {
             display: none;
         }
 
@@ -106,6 +106,18 @@
                 margin: 0 auto;
             }
         }
+
+        .neighborhood-label {
+        background: rgba(255, 255, 255, 0.9);
+        color: #111;
+        font-size: 13px;
+        font-weight: 600;
+        padding: 4px 8px;
+        border-radius: 4px;
+        border: 1px solid #333;
+        white-space: nowrap;
+        box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
 
         /* Fix issue on mobile browser where scroll breaks  */
         .mapboxgl-canvas-container.mapboxgl-touch-zoom-rotate.mapboxgl-touch-drag-pan, 
@@ -448,6 +460,108 @@ function updateLegend() {
     document.getElementById('map-legend').innerHTML = html;
 }
 
+// Add this function after updateLegend()
+
+function updateStoryLegend(chapter) {
+    if (!chapter || chapter.id === 'explore-map') {
+        return;
+    }
+
+    var activeBusinessLayer = null;
+    var activeCensusLayer = null;
+
+    chapter.onChapterEnter.forEach(function(layerSetting) {
+        if (layerSetting.opacity > 0) {
+            if (businessLayers.includes(layerSetting.layer)) {
+                activeBusinessLayer = layerSetting.layer;
+            }
+            if (censusLayers.includes(layerSetting.layer)) {
+                activeCensusLayer = layerSetting.layer;
+            }
+        }
+    });
+
+    var html = '<h4>Legend</h4>';
+
+    if (activeBusinessLayer === 'sbs-points-basic') {
+        html += `
+        <div class="legend-section"><strong>Small businesses</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#05347a"></span>Certified small business</div>
+        `;
+    }
+
+    if (activeBusinessLayer === 'sbs-points') {
+        html += `
+        <div class="legend-section"><strong>Business certification</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#3fc4d4"></span>MBE, WBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#39c46a"></span>WBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#f39d0b"></span>MBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#8a23d3"></span>EBE</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#757575"></span>Other</div>
+        `;
+    }
+
+    if (activeBusinessLayer === 'sbs-points-business-cat') {
+        html += `
+        <div class="legend-section"><strong>Business sector</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#1b9e77"></span>Education, health care, and social assistance</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#d95f02"></span>Retail, arts, entertainment, recreation, and other services</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#7570b3"></span>Accommodation and food services</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e7298a"></span>Construction</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#66a61e"></span>Manufacturing and wholesale trade</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e6ab02"></span>Transportation, warehousing, and utilities</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#a6761d"></span>Administrative support, waste management, and real estate</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ad9f9f"></span>Professional, finance, insurance, agriculture, and other enterprises</div>
+        `;
+    }
+
+    if (activeBusinessLayer === 'sbs-points race') {
+        html += `
+        <div class="legend-section"><strong>Owner ethnicity</strong></div>
+        <div class="legend-item"><span class="legend-dot" style="background:#5757ef"></span>Asian</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#0873a1"></span>Black</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#ae0481"></span>Hispanic</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#e49c01"></span>Non-minority</div>
+        <div class="legend-item"><span class="legend-dot" style="background:#757575"></span>Other</div>
+        `;
+    }
+
+    if (activeCensusLayer === 'census-data-race') {
+        html += `
+        <div class="legend-section"><strong>Predominant race</strong></div>
+        <div class="legend-note">Categorical census layer</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#fdd79b"></span>White</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#e2bcfb"></span>Asian</div>
+        <div class="legend-item"><span class="legend-swatch" style="background:#add5fc"></span>Black</div>
+        `;
+    }
+
+    if (activeCensusLayer === 'census-data-ethnicity') {
+        html += `
+        <div class="legend-section"><strong>Percent Hispanic</strong></div>
+        <div class="legend-note">lighter = lower share, darker = higher share</div>
+        <div class="legend-item"><span class="legend-gradient" style="background: linear-gradient(to right, #fff0fa, #e729c7);"></span><span>0 to 0.94</span></div>
+        `;
+    }
+
+    if (activeCensusLayer === 'census-data-poverty') {
+        html += `
+        <div class="legend-section"><strong>Poverty rate</strong></div>
+        <div class="legend-note">lighter = lower poverty, darker = higher poverty</div>
+        <div class="legend-item"><span class="legend-gradient" style="background: linear-gradient(to right, #e5fffb, #228577);"></span><span>0 to 1</span></div>
+        `;
+    }
+
+    if (activeBusinessLayer || activeCensusLayer) {
+        document.getElementById('map-legend').innerHTML = html;
+        document.getElementById('map-legend').style.display = 'block';
+    } else {
+        document.getElementById('map-legend').style.display = 'none';
+    }
+}
+
+
+
 function setupLayerToggles() {
     document.getElementById('business-layer-select')
         .addEventListener('change', function(e) {
@@ -520,6 +634,62 @@ function setupBusinessPopups() {
     });
 }
 
+var neighborhoodMarkers = [];
+
+function showLabels(places) {
+    hideNeighborhoods();
+
+    places.forEach(function(p) {
+        var el = document.createElement('div');
+        el.className = 'neighborhood-label';
+        el.innerText = p.name;
+
+        var marker = new mapboxgl.Marker({ element: el })
+            .setLngLat(p.coords)
+            .addTo(map);
+
+        neighborhoodMarkers.push(marker);
+    });
+}
+
+function hideNeighborhoods() {
+    neighborhoodMarkers.forEach(function(marker) {
+        marker.remove();
+    });
+    neighborhoodMarkers = [];
+}
+
+function showQueensLabels() {
+    showLabels([
+        { name: 'South Ozone Park', coords: [-73.819, 40.676] },
+        { name: 'South Jamaica', coords: [-73.7915, 40.6885] },
+        { name: 'Springfield Gardens', coords: [-73.756, 40.664] }
+    ]);
+}
+
+function showUptownLabels() {
+    showLabels([
+        { name: 'Harlem', coords: [-73.944, 40.811] },
+        { name: 'East Harlem', coords: [-73.938, 40.795] },
+        { name: 'Upper West Side', coords: [-73.978, 40.79] },
+        { name: 'Upper East Side', coords: [-73.955, 40.773] }
+    ]);
+}
+
+function showLowerManhattanLabels() {
+    showLabels([
+        { name: 'Lower Manhattan', coords: [-74.006, 40.712] },
+        { name: 'Midtown Manhattan', coords: [-73.985, 40.754] }
+    ]);
+}
+
+function showNorthManhattanLabels() {
+    showLabels([
+        { name: 'Inwood', coords: [-73.921, 40.867] },
+        { name: 'Fort George', coords: [-73.930, 40.858] },
+        { name: 'Washington Heights', coords: [-73.940, 40.842] }
+    ]);
+}
 
 var story = document.getElementById('story');
 var features = document.createElement('div');
@@ -555,7 +725,7 @@ config.chapters.forEach((record, idx) => {
     var container = document.createElement('div');
     var chapter = document.createElement('div');
 
-    if (record.id !== 'chapter-10') {
+    if (record.id !== 'explore-map') {
         if (record.title) {
             var title = document.createElement('h3');
             title.innerText = record.title;
@@ -679,7 +849,15 @@ function disableExploreMode() {
 
 function goBackToStory() {
     disableExploreMode();
-    document.getElementById('chapter-9').scrollIntoView({ behavior: 'auto'  });
+
+    const lastStoryChapter = config.chapters
+        .filter(c => c.id !== 'explore-map')
+        .slice(-1)[0];
+
+    if (lastStoryChapter) {
+        document.getElementById(lastStoryChapter.id)
+            .scrollIntoView({ behavior: 'auto' });
+    }
 }
 
 if (config.showMarkers) {
@@ -738,12 +916,17 @@ map.on("load", function() {
     .onStepEnter(response => {
         var chapter = config.chapters.find(chap => chap.id === response.element.id);
         response.element.classList.add('active');
-        map[chapter.mapAnimation || 'flyTo'](chapter.location);
+        map[chapter.mapAnimation || 'flyTo']({
+            ...chapter.location,
+            duration: 4500,   // <-- change this number
+            essential: true
+         });
         if (config.showMarkers) {
             marker.setLngLat(chapter.location.center);
         }
         if (chapter.onChapterEnter.length > 0) {
             chapter.onChapterEnter.forEach(setLayerOpacity);
+            updateStoryLegend(chapter);
         }
         if (chapter.callback) {
             window[chapter.callback]();
@@ -770,6 +953,8 @@ map.on("load", function() {
 
 // setup resize event
 window.addEventListener('resize', scroller.resize);
+
+
 
 </script>
 
