@@ -748,12 +748,12 @@ var config = {
             },
             {
                 layer: 'census-data-ethnicity',
-                opacity: 0.5,
+                opacity: 0.65,
                 duration: 3000
             },
             {
                 layer: 'census-data-race',
-                opacity: 0.5,
+                opacity: 0.0,
                 duration: 3000
             },
             {
