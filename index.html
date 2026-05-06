@@ -128,7 +128,7 @@
         #back-to-story {
             display: none;
             position: fixed;
-            top: 20px;
+            top: 15px;
             left: 20px;
             z-index: 9999;
             padding: 10px 14px;
@@ -155,11 +155,25 @@
             background: rgba(255, 255, 255, 0.95);
             color: #333;
             text-align: center;
-            padding: 12px 20px;
+            padding: 12px 140px 12px 140px;
             box-sizing: border-box;
             font-size: 15px;
             line-height: 22px;
             pointer-events: none;
+        }
+
+        .explore-title {
+        font-size: 17px;
+        font-weight: 700;
+        margin-bottom: 4px;
+        }
+
+    .explore-description {
+        font-size: 13px;
+        line-height: 18px;
+        max-width: 700px;
+        margin: 0 auto;
+        white-space: normal;
         }
 
         #explore-banner strong {
@@ -269,12 +283,34 @@
             margin-bottom: 6px;
         }
 
+        .clickable-legend {
+            cursor: pointer;
+        }
+
+        .clickable-legend:hover {
+            opacity: 0.75;
+            text-decoration: underline;
+        }
+
+        .legend-reset {
+            margin-top: 6px;
+            padding: 3px 6px;
+            font-size: 12px;
+            cursor: pointer;
+        }
+
                 </style>
         </head>
         <body>
 
         <button id="back-to-story" onclick="goBackToStory()">Back to Story</button>
-        <div id="explore-banner"><strong>Explore the Map</strong> — click on businesses and move around the map.</div>
+        <div id="explore-banner">
+            <div class="explore-title">Explore the Map</div>
+        
+            <div class="explore-description">
+                Use the dropdown menus in the upper-left corner to switch between business and demographic layers. Click on legend categories to filter businesses by sector, certification type, or owner ethnicity. Click on individual businesses to learn more about their location, ownership, certification status, and industry.
+            </div>
+        </div>
 
         <div id="layer-controls">
             <h4>Map Layers</h4>
@@ -369,6 +405,12 @@ function setLayerVisibilityByOpacity(layerId, visible, opacity) {
 
 function showOnlyBusinessLayer(selected) {
     businessLayers.forEach(function(layer) {
+    if (map.getLayer(layer)) {
+        map.setFilter(layer, null);
+    }
+    });
+
+    businessLayers.forEach(function(layer) {
         setLayerVisibilityByOpacity(layer, layer === selected, 1);
     });
 }
@@ -378,6 +420,14 @@ function showOnlyCensusLayer(selected) {
         let opacity = layer === 'census-data-poverty' ? 0.6 : 0.8;
         setLayerVisibilityByOpacity(layer, layer === selected, opacity);
     });
+}
+
+function filterBusinessLayer(layerId, filterExpression) {
+    map.setFilter(layerId, filterExpression);
+}
+
+function resetBusinessLayerFilter(layerId) {
+    map.setFilter(layerId, null);
 }
 
 function updateLegend() {
@@ -395,39 +445,126 @@ function updateLegend() {
     }
 
     if (business === 'sbs-points') {
-        html += `
-        <div class="legend-section"><strong>Business certification</strong></div>
-        <div class="legend-item"><span class="legend-dot" style="background:#3fc4d4"></span>MBE, WBE</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#39c46a"></span>WBE</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#f39d0b"></span>MBE</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#8a23d3"></span>EBE</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#757575"></span>Other</div>
-        `;
-    }
+    html += `
+    <div class="legend-section"><strong>Business certification</strong></div>
 
-    if (business === 'sbs-points-business-cat') {
-        html += `
-        <div class="legend-section"><strong>Business sector</strong></div>
-        <div class="legend-item"><span class="legend-dot" style="background:#1b9e77"></span>Education, health care, and social assistance</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#d95f02"></span>Retail, arts, entertainment, recreation, and other services</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#7570b3"></span>Accommodation and food services</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#e7298a"></span>Construction</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#66a61e"></span>Manufacturing and wholesale trade</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#e6ab02"></span>Transportation, warehousing, and utilities</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#a6761d"></span>Administrative support, waste management, and real estate</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#ad9f9f"></span>Professional, finance, insurance, agriculture, and other enterprises</div>
-        `;
-    }
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points', ['==', ['get', 'Certification'], 'MBE,WBE'])">
+        <span class="legend-dot" style="background:#3fc4d4"></span>
+        MBE, WBE
+    </div>
 
-    if (business === 'sbs-points race') {
-        html += `
-        <div class="legend-section"><strong>Owner ethnicity</strong></div>
-        <div class="legend-item"><span class="legend-dot" style="background:#5757ef"></span>Asian</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#0873a1"></span>Black</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#ae0481"></span>Hispanic</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#e49c01"></span>Non-minority</div>
-        <div class="legend-item"><span class="legend-dot" style="background:#757575"></span>Other</div>
-        `;
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points', ['==', ['get', 'Certification'], 'WBE'])">
+        <span class="legend-dot" style="background:#39c46a"></span>
+        WBE
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points', ['==', ['get', 'Certification'], 'MBE'])">
+        <span class="legend-dot" style="background:#f39d0b"></span>
+        MBE
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points', ['in', 'EBE', ['get', 'Certification']])">
+        <span class="legend-dot" style="background:#8a23d3"></span>
+        EBE
+    </div>
+
+    <button class="legend-reset" onclick="resetBusinessLayerFilter('sbs-points')">Show all certifications</button>
+    `;
+}
+
+if (business === 'sbs-points-business-cat') {
+    html += `
+    <div class="legend-section"><strong>Business sector</strong></div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['in', 'NAICS_Sector', 'Educational Services', 'Health Care and Social Assistance'])">
+        <span class="legend-dot" style="background:#1b9e77"></span>
+        Education, health care, and social assistance
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['in', 'NAICS_Sector', 'Retail Trade', 'Arts, Entertainment, and Recreation', 'Other Services (except Public Administration)'])">
+        <span class="legend-dot" style="background:#d95f02"></span>
+        Retail, arts, entertainment, recreation, and other services
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['==', 'NAICS_Sector', 'Accommodation and Food Services'])">
+        <span class="legend-dot" style="background:#7570b3"></span>
+        Accommodation and food services
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['==', 'NAICS_Sector', 'Construction'])">
+        <span class="legend-dot" style="background:#e7298a"></span>
+        Construction
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['in', 'NAICS_Sector', 'Manufacturing', 'Wholesale Trade'])">
+        <span class="legend-dot" style="background:#66a61e"></span>
+        Manufacturing and wholesale trade
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['in', 'NAICS_Sector', 'Transportation and Warehousing', 'Utilities'])">
+        <span class="legend-dot" style="background:#e6ab02"></span>
+        Transportation, warehousing, and utilities
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['in', 'NAICS_Sector', 'Administrative and Support and Waste Management and Remediation Services', 'Real Estate and Rental and Leasing'])">
+        <span class="legend-dot" style="background:#a6761d"></span>
+        Administrative support, waste management, and real estate
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points-business-cat', ['in', 'NAICS_Sector', 'Professional, Scientific, and Technical Services', 'Mining, Quarrying, and Oil and Gas Extraction', 'Finance and Insurance', 'Information', 'Agriculture, Forestry, Fishing and Hunting', 'Public Administration', 'Management of Companies and Enterprises'])">
+        <span class="legend-dot" style="background:#ad9f9f"></span>
+        Professional, finance, insurance, agriculture, and other enterprises
+    </div>
+
+    <button class="legend-reset"
+        onclick="resetBusinessLayerFilter('sbs-points-business-cat')">
+        Show all sectors
+    </button>
+    `;
+}
+
+if (business === 'sbs-points race') {
+    html += `
+    <div class="legend-section"><strong>Owner ethnicity</strong></div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points race', ['==', ['get', 'Ethnicity'], 'ASIAN'])">
+        <span class="legend-dot" style="background:#5757ef"></span>
+        Asian
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points race', ['==', ['get', 'Ethnicity'], 'BLACK'])">
+        <span class="legend-dot" style="background:#0873a1"></span>
+        Black
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points race', ['==', ['get', 'Ethnicity'], 'HISPANIC'])">
+        <span class="legend-dot" style="background:#ae0481"></span>
+        Hispanic
+    </div>
+
+    <div class="legend-item clickable-legend"
+        onclick="filterBusinessLayer('sbs-points race', ['==', ['get', 'Ethnicity'], 'NON-MINORITY'])">
+        <span class="legend-dot" style="background:#e49c01"></span>
+        Non-minority
+    </div>
+
+    <button class="legend-reset" onclick="resetBusinessLayerFilter('sbs-points race')">Show all ethnicities</button>
+    `;
     }
 
     // CENSUS LEGENDS
@@ -616,7 +753,7 @@ function setupBusinessPopups() {
                     <strong>Address:</strong> ${address}<br>
                     <strong>Certification Type:</strong> ${certification}<br>
                     <strong>Ethnicity of Business Owner:</strong> ${ethnicity}<br>
-                    <strong>Business Type:</strong> ${businessType}<br>
+                    <strong>Business Sector:</strong> ${businessType}<br>
                     <strong>Date of Establishment:</strong> ${dateEstablished}<br><br>
                     <strong>Business Description:</strong><br>${description}
                 </div>
@@ -689,6 +826,35 @@ function showNorthManhattanLabels() {
         { name: 'Fort George', coords: [-73.930, 40.858] },
         { name: 'Washington Heights', coords: [-73.940, 40.842] }
     ]);
+}
+
+function showEducationHealthSocialOnly() {
+    hideNeighborhoods();
+
+    map.setFilter('sbs-points-business-cat', [
+        'in',
+        'NAICS_Sector',
+        'Educational Services',
+        'Health Care and Social Assistance'
+    ]);
+}
+
+function clearBusinessFilters() {
+    businessLayers.forEach(function(layer) {
+        if (map.getLayer(layer)) {
+            map.setFilter(layer, null);
+        }
+    });
+
+    hideNeighborhoods();
+}
+
+function clearBusinessFilters() {
+    businessLayers.forEach(function(layer) {
+        if (map.getLayer(layer)) {
+            map.setFilter(layer, null);
+        }
+    });
 }
 
 var story = document.getElementById('story');
@@ -914,8 +1080,11 @@ map.on("load", function() {
         progress: true
     })
     .onStepEnter(response => {
-        var chapter = config.chapters.find(chap => chap.id === response.element.id);
-        response.element.classList.add('active');
+    var chapter = config.chapters.find(chap => chap.id === response.element.id);
+
+    clearBusinessFilters();
+
+    response.element.classList.add('active');
         map[chapter.mapAnimation || 'flyTo']({
             ...chapter.location,
             duration: 4500,   // <-- change this number

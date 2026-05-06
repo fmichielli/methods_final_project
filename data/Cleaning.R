@@ -243,5 +243,8 @@ ggplot() +
 
 st_write(nyc, dsn = "nyc_census_data.geojson", delete_dsn = TRUE)
 
-
+data_clean <- data_clean %>% 
+  mutate(NAICS_Sector = as.factor(NAICS_Sector))
 table(data_clean$NAICS_Sector)
+
+levels(data_clean$NAICS_Sector)

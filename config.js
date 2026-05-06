@@ -7,7 +7,7 @@ var config = {
     use3dTerrain: false,
     title: 'Small Businesses of New York City',
     subtitle: "How do Small Businesses Contribute to NYC's Communities?",
-    byline: 'By  Frankie Michielli, Aishwarya Warad, and Dajin Wang',
+    byline: 'By Frankie Michielli, Aishwarya Warad, and Dajin Wang',
     footer: 'Source: SBS Certified Business List, NYC OpenData. Census Data, ACS.',
     chapters: [
         {
@@ -15,7 +15,7 @@ var config = {
             alignment: 'center',
             hidden: false,
             title: 'Small Businesses',
-            description: "Small businesses are a vital part of NYC's economy and community development. The blue dots represent the locations of registered small businesses across the city.",
+            description: "Small businesses are a vital part of NYC's economy and community development. The blue dots represent the locations of small businesses registered with the Department of Small Business Services.",
             location: {
                 center: [ -73.945036, 40.734321],
                 zoom: 11,
@@ -75,7 +75,7 @@ var config = {
             alignment: 'left',
             hidden: false,
             title: 'Women, Minority-Owned, and Emerging Business Enterprises',
-            description: 'Through the Small Business Services certification program, the City certifies, promotes, and fosters the growth of the minority and women-owned businesses. Through the certification program, SBS provides these businesses with mentorship programs, access to contracting opportunities, and networking opportunities.',
+            description: 'Through the Small Business Services certification program, the City certifies, promotes, and fosters the growth of the minority and women-owned businesses. SBS provides these businesses with mentorship programs, access to contracting opportunities, and networking opportunities.',
             location: {
                 center: [-73.945036, 40.734321],
                 zoom: 11,
@@ -124,7 +124,7 @@ var config = {
             id: 'chapter-3',
             alignment: 'left',
             hidden: false,
-            title: 'Williamsburg and Greenpoint, Brooklyn, are hubs for women-owned businesses.',
+            title: 'Williamsburg and Greenpoint, Brooklyn, are hubs for women-owned businesses, marked in green.',
             description: '',
             location: {
                 center: [-73.94943, 40.71448],
@@ -226,7 +226,7 @@ var config = {
             alignment: 'center',
             hidden: false,
             title: "Poverty Rates Across NYC's Neighborhoods",
-            description: "According to New York officials, small businesses are the backbone of the city's economy, and have been critical in the New York City's recovery from the COVID pandemic. Let's investigate the relationship between small businesses and poverty rates across the city. The census data layers show the poverty rates across NYC's neighborhoods, with darker colors representing higher poverty rates.",
+            description: "According to New York officials, small businesses are the backbone of the city's economy, and have been critical in the New York City's recovery from the COVID pandemic. Let's investigate the relationship between small businesses and poverty rates across the city. The census layer shows the poverty rates across NYC's neighborhoods, with darker colors representing higher poverty rates.",
             location: {
                 center: [-73.945036, 40.734321],
                 zoom: 10,
@@ -823,6 +823,117 @@ var config = {
         id: 'chapter-16',
         alignment: 'center',
         hidden: false,
+        title: 'Business Sectors',
+        description: 'We can also understand the sectors in which small businesses operate across the city. The SBS data categorizes businesses into over 10 different sectors, including construction, retail, food services, and education services.',
+        location: {
+            center: [-73.945036, 40.734321],
+            zoom: 11,
+            pitch: 0,
+            bearing: 0
+        },
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        callback: 'hideNeighborhoods',
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+
+    {
+        id: 'chapter-17',
+        alignment: 'center',
+        hidden: false,
+        title: 'Education, Health Care, and Social Assistance',
+        description: 'Businesses that provide education, health care, and social assistance services are well distributed throughout the city, particularly in Manhattan, the Bronx, and Brooklyn. However, there are gaps in the middle of Queens and throughout Staten Island.',
+        location: {
+            center: [-73.94, 40.735],
+            zoom: 11,
+            pitch: 0,
+            bearing: 0
+        },
+        callback: 'showEducationHealthSocialOnly',
+        mapAnimation: 'flyTo',
+        rotateAnimation: false,
+        onChapterEnter: [
+            {
+                layer: 'sbs-points-basic',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points-business-cat',
+                opacity: 1,
+                duration: 3000
+            },
+            {
+                layer: 'sbs-points race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-ethnicity',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-race',
+                opacity: 0,
+                duration: 3000
+            },
+            {
+                layer: 'census-data-poverty',
+                opacity: 0,
+                duration: 3000
+            }
+        ],
+        onChapterExit: []
+    },
+
+    {
+        id: 'chapter-20',
+        alignment: 'center',
+        hidden: false,
         title: 'Project Next Steps:',
         description: 'Interviews with small business owners and community members to understand the impact of small businesses on communities across the city. And, improve visualizations!',
         location: {
@@ -833,7 +944,7 @@ var config = {
         },
         mapAnimation: 'flyTo',
         rotateAnimation: false,
-        callback: 'hideNeighborhoods',
+       callback: 'clearBusinessFilters',
         onChapterEnter: [
             {
                 layer: 'sbs-points-basic',
