@@ -41,6 +41,11 @@ var config = {
                     opacity: 0,
                     duration: 3000
                     },
+                    {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                 {
                     layer: 'sbs-points race',
                     opacity: 0,
@@ -101,6 +106,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -151,6 +161,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -202,6 +217,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -252,6 +272,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -303,6 +328,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -358,6 +388,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -413,6 +448,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
                    {
                        layer: 'census-data-ethnicity',
                        opacity: 0,
@@ -464,6 +504,12 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
 
                 {
                     layer: 'sbs-points race',
@@ -520,6 +566,11 @@ var config = {
                        opacity: 0,
                        duration: 3000
                        },
+                       {
+                        layer: 'sbs-points-business-cat-educ',
+                        opacity: 0,
+                        duration: 3000
+                        },
 
                 {
                     layer: 'sbs-points race',
@@ -580,6 +631,11 @@ var config = {
                 duration: 3000
             },
             {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 0,
+                duration: 3000
+                },
+            {
                 layer: 'sbs-points race',
                 opacity: 1,
                 duration: 3000
@@ -633,6 +689,11 @@ var config = {
                 opacity: 0,
                 duration: 3000
             },
+            {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 0,
+                duration: 3000
+                },
             {
                 layer: 'sbs-points race',
                 opacity: 1,
@@ -688,6 +749,11 @@ var config = {
                 duration: 3000
             },
             {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 0,
+                duration: 3000
+                },
+            {
                 layer: 'sbs-points race',
                 opacity: 1,
                 duration: 3000
@@ -741,6 +807,11 @@ var config = {
                 opacity: 0,
                 duration: 3000
             },
+            {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 0,
+                duration: 3000
+                },
             {
                 layer: 'sbs-points race',
                 opacity: 1,
@@ -796,6 +867,11 @@ var config = {
                 duration: 3000
             },
             {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 0,
+                duration: 3000
+                },
+            {
                 layer: 'sbs-points race',
                 opacity: 1,
                 duration: 3000
@@ -833,7 +909,6 @@ var config = {
         },
         mapAnimation: 'flyTo',
         rotateAnimation: false,
-        callback: 'hideNeighborhoods',
         onChapterEnter: [
             {
                 layer: 'sbs-points-basic',
@@ -850,6 +925,11 @@ var config = {
                 opacity: 1,
                 duration: 3000
             },
+            {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 0,
+                duration: 3000
+                },
             {
                 layer: 'sbs-points race',
                 opacity: 0,
@@ -887,7 +967,6 @@ var config = {
             pitch: 0,
             bearing: 0
         },
-        callback: 'showEducationHealthSocialOnly',
         mapAnimation: 'flyTo',
         rotateAnimation: false,
         onChapterEnter: [
@@ -903,9 +982,16 @@ var config = {
             },
             {
                 layer: 'sbs-points-business-cat',
-                opacity: 1,
+                opacity: 0,
                 duration: 3000
             },
+
+            {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 1,
+                duration: 3000
+                },
+
             {
                 layer: 'sbs-points race',
                 opacity: 0,
@@ -944,8 +1030,12 @@ var config = {
         },
         mapAnimation: 'flyTo',
         rotateAnimation: false,
-       callback: 'clearBusinessFilters',
         onChapterEnter: [
+            {
+                layer: 'sbs-points-business-cat-educ',
+                opacity: 0,
+                duration: 3000
+                },
             {
                 layer: 'sbs-points-basic',
                 opacity: 1,
@@ -971,6 +1061,8 @@ var config = {
                 opacity: 0,
                 duration: 3000
             },
+
+
             {
                 layer: 'census-data-race',
                 opacity: 0,

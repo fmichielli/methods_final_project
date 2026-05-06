@@ -385,7 +385,8 @@ var businessLayers = [
     'sbs-points-basic',
     'sbs-points',
     'sbs-points-business-cat',
-    'sbs-points race'
+    'sbs-points race',
+    'sbs-points-business-cat-educ'
 ];
 
 var censusLayers = [
@@ -828,34 +829,9 @@ function showNorthManhattanLabels() {
     ]);
 }
 
-function showEducationHealthSocialOnly() {
-    hideNeighborhoods();
 
-    map.setFilter('sbs-points-business-cat', [
-        'in',
-        'NAICS_Sector',
-        'Educational Services',
-        'Health Care and Social Assistance'
-    ]);
-}
 
-function clearBusinessFilters() {
-    businessLayers.forEach(function(layer) {
-        if (map.getLayer(layer)) {
-            map.setFilter(layer, null);
-        }
-    });
 
-    hideNeighborhoods();
-}
-
-function clearBusinessFilters() {
-    businessLayers.forEach(function(layer) {
-        if (map.getLayer(layer)) {
-            map.setFilter(layer, null);
-        }
-    });
-}
 
 var story = document.getElementById('story');
 var features = document.createElement('div');
@@ -1082,7 +1058,7 @@ map.on("load", function() {
     .onStepEnter(response => {
     var chapter = config.chapters.find(chap => chap.id === response.element.id);
 
-    clearBusinessFilters();
+
 
     response.element.classList.add('active');
         map[chapter.mapAnimation || 'flyTo']({
