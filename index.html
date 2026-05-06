@@ -299,6 +299,32 @@
             cursor: pointer;
         }
 
+        .missing-business-marker {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        }
+
+        .missing-dot {
+        width: 16px;
+        height: 16px;
+        background: #38bdf8;
+        border: 2px solid white;
+        border-radius: 50%;
+        box-shadow: 0 0 0 4px rgba(56, 189, 248, 0.35);
+}
+
+        .missing-label {
+        background: white;
+        color: #222;
+        padding: 5px 9px;
+        border-radius: 6px;
+        font-size: 13px;
+        font-weight: 700;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+        white-space: nowrap;
+        }
+
                 </style>
         </head>
         <body>
@@ -386,7 +412,6 @@ var businessLayers = [
     'sbs-points',
     'sbs-points-business-cat',
     'sbs-points race',
-    'sbs-points-business-cat-educ'
 ];
 
 var censusLayers = [
@@ -394,6 +419,56 @@ var censusLayers = [
     'census-data-race',
     'census-data-poverty'
 ];
+
+const missingBusinesses = {
+  garciaHardware: {
+    name: "Garcia Hardware & Households",
+    coordinates: [-73.961333, 40.800944]
+  },
+  rotiRoll: {
+    name: "Roti Roll (Bombay Frankie)",
+    coordinates: [-73.964333, 40.802556]
+  },
+  bkGangnam: {
+    name: "BK Gangnam",
+    coordinates: [-73.983250, 40.690667]
+  }
+};
+
+let missingBusinessMarker = null;
+
+function showMissingBusinessMarker(businessKey) {
+  const business = missingBusinesses[businessKey];
+
+  if (!business) {
+    console.error("Missing business not found:", businessKey);
+    return;
+  }
+
+  if (missingBusinessMarker) {
+    missingBusinessMarker.remove();
+  }
+
+  const el = document.createElement("div");
+  el.className = "missing-business-marker";
+  el.innerHTML = `
+    <div class="missing-dot"></div>
+    <div class="missing-label">${business.name}</div>
+  `;
+
+  missingBusinessMarker = new mapboxgl.Marker(el)
+    .setLngLat(business.coordinates)
+    .addTo(map);
+}
+
+function removeMissingBusinessMarker() {
+  if (missingBusinessMarker) {
+    missingBusinessMarker.remove();
+    missingBusinessMarker = null;
+  }
+}
+
+
 
 function setLayerVisibilityByOpacity(layerId, visible, opacity) {
     if (!map.getLayer(layerId)) return;
@@ -429,6 +504,45 @@ function filterBusinessLayer(layerId, filterExpression) {
 
 function resetBusinessLayerFilter(layerId) {
     map.setFilter(layerId, null);
+}
+
+let missingBusinessTimeout = null;
+
+function hideMissingBusiness() {
+
+  if (missingBusinessTimeout) {
+    clearTimeout(missingBusinessTimeout);
+    missingBusinessTimeout = null;
+  }
+
+  removeMissingBusinessMarker();
+}
+
+function showGarciaHardware() {
+
+  hideMissingBusiness();
+
+  missingBusinessTimeout = setTimeout(function() {
+    showMissingBusinessMarker("garciaHardware");
+  }, 1800);
+}
+
+function showRotiRoll() {
+
+  hideMissingBusiness();
+
+  missingBusinessTimeout = setTimeout(function() {
+    showMissingBusinessMarker("rotiRoll");
+  }, 1800);
+}
+
+function showBKGangnam() {
+
+  hideMissingBusiness();
+
+  missingBusinessTimeout = setTimeout(function() {
+    showMissingBusinessMarker("bkGangnam");
+  }, 2200);
 }
 
 function updateLegend() {
@@ -1061,11 +1175,11 @@ map.on("load", function() {
 
 
     response.element.classList.add('active');
-        map[chapter.mapAnimation || 'flyTo']({
+            map[chapter.mapAnimation || 'flyTo']({
             ...chapter.location,
-            duration: 4500,   // <-- change this number
+            duration: chapter.location.duration || 4500,
             essential: true
-         });
+        });
         if (config.showMarkers) {
             marker.setLngLat(chapter.location.center);
         }

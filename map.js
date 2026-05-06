@@ -87,6 +87,54 @@ map.on('load',function(){
       });
   });
 
+  const missingBusinesses = {
+    garciaHardware: {
+      name: "Garcia Hardware & Households",
+      coordinates: [-73.961333, 40.800944]
+    },
+  
+    rotiRoll: {
+      name: "Roti Roll (Bombay Frankie)",
+      coordinates: [-73.964333, 40.802556]
+    },
+  
+    bkGangnam: {
+      name: "BK Gangnam",
+      coordinates: [-73.983250, 40.690667]
+    }
+  };
+  
+  let missingBusinessMarker = null;
+  
+  function showMissingBusinessMarker(businessKey) {
+  
+    const business = missingBusinesses[businessKey];
+  
+    if (missingBusinessMarker) {
+      missingBusinessMarker.remove();
+    }
+  
+    const el = document.createElement("div");
+  
+    el.className = "missing-business-marker";
+  
+    el.innerHTML = `
+      <div class="missing-dot"></div>
+      <div class="missing-label">${business.name}</div>
+    `;
+  
+    missingBusinessMarker = new mapboxgl.Marker(el)
+      .setLngLat(business.coordinates)
+      .addTo(map);
+  }
+  
+  function removeMissingBusinessMarker() {
+    if (missingBusinessMarker) {
+      missingBusinessMarker.remove();
+      missingBusinessMarker = null;
+    }
+  }
+
   function enableExploreMode() {
     map.scrollZoom.enable();
     map.boxZoom.enable();
